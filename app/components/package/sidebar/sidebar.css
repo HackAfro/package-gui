@@ -1,0 +1,30 @@
+.sidebar {
+  grid-column: auto / span 1;
+  padding: 30px 16px;
+  background: #5d5e69;
+  height: 100vh;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 15px;
+}
+
+.sidebarImg {
+  width: 80px;
+  height: 80px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoText {
+  margin: 10px 0;
+}
