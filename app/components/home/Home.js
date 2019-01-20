@@ -30,7 +30,9 @@ export default class Home extends Component {
       async fileArray => {
         const [filePath] = fileArray;
 
-        await this.setFilePath(filePath).this.setState({ hasFile: true });
+        await this.setFilePath(filePath);
+
+        this.setState({ hasFile: true });
       }
     );
   }
