@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Package from 'react-feather/dist/icons/package';
 import Email from 'react-feather/dist/icons/mail';
 import User from 'react-feather/dist/icons/user';
@@ -6,36 +7,70 @@ import ExternalLink from 'react-feather/dist/icons/external-link';
 
 import icon from './imgs/json-icon.svg';
 import styles from './sidebar.css';
+import Badge from '../../badge/badge';
 
-const PackageSidebar = () => (
+const PackageSidebar = ({ packageInfo }) => (
   <div className={styles.sidebar}>
     <div className={styles.sidebarHeader}>
       <img src={icon} alt="Package icon" className={styles.sidebarImg} />
     </div>
+    <div className={styles.description}>
+      <p className={styles.description}>{packageInfo.description || ''}</p>
+    </div>
     <div className={styles.details}>
-      <div className="info">
-        <Package size={22} />
-        <h5 className={styles.infoText}>Package GUI</h5>
+      <div className={styles.info}>
+        <div className={styles.iconArea}>
+          <Package size={22} className={styles.sideIcon} />
+        </div>
+        <h5 className={styles.infoText}>
+          {packageInfo.productName || packageInfo.name}
+        </h5>
       </div>
-      <div className="info">
-        <Email size={22} />
-        <h5 className={styles.infoText}>richyafro@gmail.com</h5>
+      {packageInfo.author && (
+        <Fragment>
+          <div className={styles.info}>
+            <div className={styles.iconArea}>
+              <Email size={22} className={styles.sideIcon} />
+            </div>
+            <h5 className={styles.infoText}>
+              {packageInfo.author.email || ''}
+            </h5>
+          </div>
+          <div className={styles.info}>
+            <div className={styles.iconArea}>
+              <User size={22} className={styles.sideIcon} />
+            </div>
+            <h5 className={styles.infoText}>{packageInfo.author.name}</h5>
+          </div>
+        </Fragment>
+      )}
+      <div className={styles.info}>
+        <div className={styles.iconArea}>
+          <a href={packageInfo.homepage} target="__blank">
+            <ExternalLink size={22} className={styles.sideIcon} />
+          </a>
+        </div>
+        <h5 className={styles.infoText}>GitHub</h5>
       </div>
-      <div className="info">
-        <User size={22} />
-        <h5 className={styles.infoText}>Richard Umoffia</h5>
-      </div>
-      <div className="info">
-        <a className={styles.infoText} href="">
-          <ExternalLink size={22} />
-        </a>
-      </div>
-      <div className="info">
-        <div>tags</div>
-        {/* <h5 className="info__text"></h5> */}
-      </div>
+      {packageInfo.keywords && (
+        <div className="info">
+          <div className={styles.keywordArea}>
+            {packageInfo.keywords.map(keyword => (
+              <div style={{ margin: '5px 0' }}>
+                <Badge color="grey" fontSize={10} uppercase={false}>
+                  {keyword}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   </div>
 );
+
+PackageSidebar.propTypes = {
+  packageInfo: PropTypes.objectOf(PropTypes.any).isRequired
+};
 
 export default PackageSidebar;
