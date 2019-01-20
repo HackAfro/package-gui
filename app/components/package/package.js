@@ -13,7 +13,8 @@ export default class Package extends Component {
 
   state = {
     loading: true,
-    loadingText: 'Analysing and parsing package file'
+    loadingText: 'Analysing and parsing package file',
+    fileData: {}
   };
 
   componentDidMount() {
@@ -24,11 +25,11 @@ export default class Package extends Component {
     const { packagePath } = this.props;
     const fileData = await parsePackageFile(packagePath);
     console.log(fileData);
-    this.setState({ loading: false });
+    this.setState({ loading: false, fileData });
   }
 
   render() {
-    const { loading, loadingText } = this.state;
+    const { loading, loadingText, fileData } = this.state;
 
     return loading ? (
       <div className={styles.loaderArea}>
@@ -37,7 +38,7 @@ export default class Package extends Component {
       </div>
     ) : (
       <div className={styles.packageArea}>
-        <PackageSidebar />
+        <PackageSidebar packageInfo={fileData} />
         <div className={styles.packageInfo}>Information</div>
       </div>
     );
