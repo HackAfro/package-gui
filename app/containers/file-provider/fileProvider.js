@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 
-export const FileContext = createContext('');
+export const FileContext = createContext({});
 
 class FileProvider extends React.Component {
   constructor() {
@@ -10,13 +10,14 @@ class FileProvider extends React.Component {
   }
 
   state = {
-    packagePath: ''
+    packagePath: '',
+    packageFolder: ''
   };
 
-  setFilePath(path) {
+  setFilePath({ packagePath, packageFolder }) {
     return new Promise((resolve, reject) => {
       try {
-        this.setState({ packagePath: path }, resolve);
+        this.setState({ packagePath, packageFolder }, resolve);
       } catch (e) {
         reject(e);
       }
@@ -24,12 +25,12 @@ class FileProvider extends React.Component {
   }
 
   render() {
-    const { packagePath } = this.state;
+    const { packagePath, packageFolder } = this.state;
     const { children } = this.props;
 
     return (
       <FileContext.Provider
-        value={{ packagePath, setFilePath: this.setFilePath }}
+        value={{ packagePath, packageFolder, setFilePath: this.setFilePath }}
       >
         {children}
       </FileContext.Provider>
