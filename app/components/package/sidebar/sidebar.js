@@ -56,7 +56,7 @@ const PackageSidebar = ({ packageInfo }) => (
         <div className="info">
           <div className={styles.keywordArea}>
             {packageInfo.keywords.map(keyword => (
-              <div style={{ margin: '5px 0' }}>
+              <div style={{ margin: '5px 0' }} key={keyword}>
                 <Badge color="grey" fontSize={10} uppercase={false}>
                   {keyword}
                 </Badge>
