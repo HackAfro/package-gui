@@ -1,6 +1,7 @@
 import fs from 'fs';
+import { exec } from 'child_process';
 
-const parsePackageFile = filePath =>
+export const parsePackageFile = filePath =>
   new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
@@ -14,4 +15,27 @@ const parsePackageFile = filePath =>
     });
   });
 
-export default parsePackageFile;
+export const getPackageInfo = ({ pkg, variant = null }) =>
+  new Promise((resolve, reject) => {
+    exec(`npm view ${pkg} ${variant || ''} --json`, (err, stdout) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(stdout);
+    });
+  });
+
+export const installPackage = ({ pkg, version, packageFolder }) =>
+  new Promise((resolve, reject) => {
+    const command = `npm  --prefix ${packageFolder} i ${pkg}@${version}`;
+    console.log(command);
+    exec(command, (err, stdout) => {
+      if (err) {
+        console.log(err);
+        reject();
+      }
+
+      resolve(stdout);
+    });
+  });
