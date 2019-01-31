@@ -9,15 +9,18 @@ import { FileContext } from '../../containers/file-provider/fileProvider';
 const { dialog } = electron.remote;
 
 export default class Home extends Component {
+  static contextType = FileContext;
+
   constructor() {
     super();
-
     this.onButtonClick = this.onButtonClick.bind(this);
   }
 
   state = { hasFile: false };
 
   onButtonClick(e) {
+    const { setFilePath } = this.context;
+
     e.preventDefault();
 
     dialog.showOpenDialog(
@@ -29,9 +32,10 @@ export default class Home extends Component {
       },
       async fileArray => {
         const [filePath] = fileArray;
+        const packageIndex = filePath.indexOf('package.json');
+        const packageFolder = filePath.slice(0, packageIndex);
 
-        await this.setFilePath(filePath);
-
+        await setFilePath({ packagePath: filePath, packageFolder });
         this.setState({ hasFile: true });
       }
     );
@@ -43,16 +47,9 @@ export default class Home extends Component {
     return hasFile ? (
       <Redirect to="/package" />
     ) : (
-      <FileContext.Consumer>
-        {({ setFilePath }) => {
-          this.setFilePath = setFilePath;
-          return (
-            <div className={styles.container} data-tid="container">
-              <Button onClick={this.onButtonClick}>Select Package file</Button>
-            </div>
-          );
-        }}
-      </FileContext.Consumer>
+      <div className={styles.container} data-tid="container">
+        <Button onClick={this.onButtonClick}>Select Package file</Button>
+      </div>
     );
   }
 }
