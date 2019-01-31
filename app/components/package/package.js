@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import ProgressLoader from '../loader/loader';
 import styles from './package.css';
-import parsePackageFile from '../../utils';
+import { parsePackageFile } from '../../utils';
 import PackageSidebar from './sidebar/sidebar';
+import DependenciesList from '../dependencies-list';
 
 export default class Package extends Component {
   static propTypes = {
@@ -39,7 +40,9 @@ export default class Package extends Component {
     ) : (
       <div className={styles.packageArea}>
         <PackageSidebar packageInfo={fileData} />
-        <div className={styles.packageInfo}>Information</div>
+        <div className={styles.packageInfo}>
+          <DependenciesList packageInfo={fileData} />
+        </div>
       </div>
     );
   }
