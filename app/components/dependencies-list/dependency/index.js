@@ -8,6 +8,10 @@ import { FileContext } from '../../../containers/file-provider/fileProvider';
 class Dependency extends Component {
   static contextType = FileContext;
 
+  static containsCurrentVersion(versions = [], currentVersion = '') {
+    return versions.includes(currentVersion.replace('^', ''));
+  }
+
   state = {
     versions: [],
     packageUrl: ''
@@ -40,11 +44,19 @@ class Dependency extends Component {
       versionsPromise,
       urlPromise
     ]);
-    const versions = versionsString
-      .slice(1, versionsString.length - 2)
-      .split(',')
-      .map(string => string.trim().replace(/\n/, ''));
-    const last5Versions = versions.slice(versions.length - 5);
+    const versions = JSON.parse(versionsString);
+    let last5Versions = versions.slice(versions.length - 5);
+
+    if (
+      !this.constructor.containsCurrentVersion(
+        last5Versions,
+        dependency.packageVersion
+      )
+    ) {
+      last5Versions = last5Versions
+        .splice(0, 5)
+        .concat(this.cleanPackageVersion);
+    }
     this.setState({
       versions: last5Versions,
       packageUrl: url
@@ -56,13 +68,16 @@ class Dependency extends Component {
     const { dependency } = this.props;
     const { packageName } = dependency;
 
-    const response = await installPackage({
+    await installPackage({
       pkg: packageName,
       packageFolder,
       version
     });
+  }
 
-    console.log(response);
+  get cleanPackageVersion() {
+    const { dependency } = this.props;
+    return dependency.packageVersion.replace('^', '');
   }
 
   render() {
@@ -77,8 +92,8 @@ class Dependency extends Component {
         <div>
           <select
             name="version"
-            className="package-versions"
-            defaultValue={dependency.packageVersion}
+            className={styles.versionsInput}
+            value={this.cleanPackageVersion}
             onChange={this.onVersionChange}
           >
             {versions.map(version => (
