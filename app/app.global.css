@@ -2,7 +2,7 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Cabin:400,500,600>');
 
 body {
   position: relative;
@@ -10,7 +10,7 @@ body {
   height: 100vh;
   overflow-y: hidden;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Cabin', sans-serif;
 }
 
 h2 {
