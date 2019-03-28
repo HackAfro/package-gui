@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Package from 'react-feather/dist/icons/package';
 import Email from 'react-feather/dist/icons/mail';
 import User from 'react-feather/dist/icons/user';
 import ExternalLink from 'react-feather/dist/icons/external-link';
+import ArrowBack from 'react-feather/dist/icons/arrow-left';
 
 import icon from './imgs/json-icon.svg';
 import styles from './sidebar.css';
@@ -11,6 +13,11 @@ import Badge from '../../badge/badge';
 
 const PackageSidebar = ({ packageInfo }) => (
   <div className={styles.sidebar}>
+    <div>
+      <Link to="/">
+        <ArrowBack size={22} className={styles.backButton} />
+      </Link>
+    </div>
     <div className={styles.sidebarHeader}>
       <img src={icon} alt="Package icon" className={styles.sidebarImg} />
     </div>
@@ -44,14 +51,16 @@ const PackageSidebar = ({ packageInfo }) => (
           </div>
         </Fragment>
       )}
-      <div className={styles.info}>
-        <div className={styles.iconArea}>
-          <a href={packageInfo.homepage} target="__blank">
-            <ExternalLink size={22} className={styles.sideIcon} />
-          </a>
+      {packageInfo.homePage && (
+        <div className={styles.info}>
+          <div className={styles.iconArea}>
+            <a href={packageInfo.homepage} target="__blank">
+              <ExternalLink size={22} className={styles.sideIcon} />
+            </a>
+          </div>
+          <h5 className={styles.infoText}>GitHub</h5>
         </div>
-        <h5 className={styles.infoText}>GitHub</h5>
-      </div>
+      )}
       {packageInfo.keywords && (
         <div className="info">
           <div className={styles.keywordArea}>
