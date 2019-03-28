@@ -8,9 +8,9 @@ export default class PackagePage extends Component {
   render() {
     return (
       <FileContext.Consumer>
-        {({ packagePath }) =>
-          packagePath ? (
-            <Package packagePath={packagePath} />
+        {({ currentPackagePath }) =>
+          currentPackagePath ? (
+            <Package packagePath={currentPackagePath} />
           ) : (
             <Redirect to="/" />
           )
