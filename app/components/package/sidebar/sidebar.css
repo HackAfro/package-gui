@@ -1,6 +1,6 @@
 .sidebar {
   grid-column: auto / span 1;
-  padding: 30px 16px;
+  padding: 20px 16px;
   background: #5d5e69;
   height: 100vh;
 }
@@ -42,6 +42,13 @@
   height: 18px;
   width: 18px;
   margin-right: 15px;
+}
+
+.backButton {
+  color: #ff1d5e;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
 }
 
 .infoText {
