@@ -7,7 +7,7 @@ import User from 'react-feather/dist/icons/user';
 import ExternalLink from 'react-feather/dist/icons/external-link';
 import ArrowBack from 'react-feather/dist/icons/arrow-left';
 
-import icon from './imgs/json-icon.svg';
+import icon from './imgs/package.png';
 import styles from './sidebar.css';
 import Badge from '../../badge/badge';
 
