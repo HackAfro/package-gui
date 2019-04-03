@@ -57,17 +57,18 @@ class ProjectsList extends Component {
 
     return (
       <ul className={styles.projectList}>
-        {projectsInfo.map(({ name, path }) => (
+        {projectsInfo.map(({ name, path }, index) => (
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <li
             className={styles.projectItem}
             onClick={() => this.onProjectClick(path)}
             onKeyDown={e => {
-              if (e.key === 'enter') {
+              if (e.key.toLowerCase() === 'enter') {
                 this.onProjectClick(path);
               }
             }}
-            tabIndex={-1}
+            tabIndex={index}
+            key={name}
           >
             <div className={styles.projectDetails}>
               <span className={styles.projectName}>{name}</span>
