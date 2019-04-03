@@ -8,6 +8,7 @@ import Button from '../button/button';
 import styles from './Home.css';
 import AddFileIcon from './add-files.svg';
 import ProjectsList from './projectList/projectList';
+import { getPackageFolder } from '../../utils';
 
 const { dialog } = electron.remote;
 
@@ -37,8 +38,7 @@ export default class Home extends Component {
       },
       async fileArray => {
         const [filePath] = fileArray;
-        const packageIndex = filePath.indexOf('package.json');
-        const packageFolder = filePath.slice(0, packageIndex);
+        const packageFolder = getPackageFolder(filePath);
 
         await setFilePath({ packagePath: filePath, packageFolder });
         history.push('/package');
